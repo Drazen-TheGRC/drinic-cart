@@ -17,6 +17,7 @@ const shoppingListDB = ref(database, 'drinicCart');
 
 const inputFieldEl = document.getElementById('input-field');
 const buttonAddEl = document.getElementById('button-add');
+const shoppingListEL = document.getElementById('shopping-list');
 
 buttonAddEl.addEventListener('click', function () {
   if (inputFieldEl.value) {
@@ -26,6 +27,7 @@ buttonAddEl.addEventListener('click', function () {
 
     console.log(inputFieldValue);
 
+    shoppingListEL.innerHTML += `<li>${inputFieldValue}</li>`;
     inputFieldEl.value = '';
   }
 });
