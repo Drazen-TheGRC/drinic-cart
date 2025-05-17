@@ -3,6 +3,7 @@ import {
   getDatabase,
   ref,
   push,
+  onValue,
 } from 'https://www.gstatic.com/firebasejs/11.7.1/firebase-database.js';
 
 const firebaseConfig = {
@@ -25,10 +26,26 @@ buttonAddEl.addEventListener('click', function () {
 
     push(shoppingListDB, inputFieldValue);
 
-    appendItemToShoppingListEl(inputFieldValue);
     clearInputFieldEl();
   }
 });
+
+onValue(shoppingListDB, function (snapshot) {
+  if (snapshot.val() !== null) {
+    let shoppingListArray = Object.values(snapshot.val());
+    clearShoppingListEl();
+
+    for (let i = 0; i < shoppingListArray.length; i++) {
+      appendItemToShoppingListEl(shoppingListArray[i]);
+    }
+
+    console.log(shoppingListArray);
+  }
+});
+
+function clearShoppingListEl() {
+  shoppingListEL.innerHTML = '';
+}
 
 function clearInputFieldEl() {
   inputFieldEl.value = '';
