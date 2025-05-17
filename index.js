@@ -25,9 +25,15 @@ buttonAddEl.addEventListener('click', function () {
 
     push(shoppingListDB, inputFieldValue);
 
-    console.log(inputFieldValue);
-
-    shoppingListEL.innerHTML += `<li>${inputFieldValue}</li>`;
-    inputFieldEl.value = '';
+    appendItemToShoppingListEl(inputFieldValue);
+    clearInputFieldEl();
   }
 });
+
+function clearInputFieldEl() {
+  inputFieldEl.value = '';
+}
+
+function appendItemToShoppingListEl(inputFieldValue) {
+  shoppingListEL.innerHTML += `<li>${inputFieldValue}</li>`;
+}
