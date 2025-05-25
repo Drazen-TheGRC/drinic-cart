@@ -60,6 +60,11 @@ ul {
 }
 
 ul li {
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+
   font-size: 20px;
   background-color: #fffdf8;
   padding: 16px;

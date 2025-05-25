@@ -4,6 +4,7 @@ import {
   ref,
   push,
   onValue,
+  remove,
 } from 'https://www.gstatic.com/firebasejs/11.7.1/firebase-database.js';
 
 const firebaseConfig = {
@@ -32,14 +33,24 @@ buttonAddEl.addEventListener('click', function () {
 
 onValue(shoppingListDB, function (snapshot) {
   if (snapshot.val() !== null) {
-    let shoppingListArray = Object.values(snapshot.val());
+    let shoppingListArray = Object.entries(snapshot.val());
     clearShoppingListEl();
 
     for (let i = 0; i < shoppingListArray.length; i++) {
-      appendItemToShoppingListEl(shoppingListArray[i]);
+      let currentItem = shoppingListArray[i];
+      // let currentItemId = currentItem[0];
+      // let currentItemValue = currentItem[1];
+
+      // console.log(currentItem);
+      // console.log(currentItemId);
+      // console.log(currentItemValue);
+
+      appendItemToShoppingListEl(currentItem);
     }
 
-    console.log(shoppingListArray);
+    // console.log(shoppingListArray);
+  } else {
+    clearShoppingListEl();
   }
 });
 
@@ -51,6 +62,20 @@ function clearInputFieldEl() {
   inputFieldEl.value = '';
 }
 
-function appendItemToShoppingListEl(inputFieldValue) {
-  shoppingListEL.innerHTML += `<li>${inputFieldValue}</li>`;
+function appendItemToShoppingListEl(item) {
+  let itemId = item[0];
+  let itemValue = item[1];
+
+  let newLiEl = document.createElement('li');
+
+  newLiEl.addEventListener('dblclick', function () {
+    console.log(itemValue);
+
+    let extractLocationOfTheItemInDb = ref(database, `drinicCart/${itemId}`);
+    remove(extractLocationOfTheItemInDb);
+  });
+
+  newLiEl.textContent = itemValue;
+
+  shoppingListEL.append(newLiEl);
 }
